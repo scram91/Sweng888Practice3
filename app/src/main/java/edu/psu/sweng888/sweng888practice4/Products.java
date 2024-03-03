@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class Products implements Parcelable, Serializable {
+    //Strings to represent data that will bne displayed in list
     private String mPrice;
     private String mDescription;
     private String mName;
     private String mSeller;
 
+    //Constructor
     public Products(String name, String seller, String price, String description) {
         this.mName = name;
         this.mSeller = seller;
@@ -45,6 +47,7 @@ public class Products implements Parcelable, Serializable {
         return 0;
     }
 
+    //Required for putParcelableArrayListExtra.
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags){
         dest.writeString(mName);
@@ -53,6 +56,7 @@ public class Products implements Parcelable, Serializable {
         dest.writeString(mPrice);
     }
 
+    //Getters and Setters
     public String getName() {
         return mName;
     }

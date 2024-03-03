@@ -14,9 +14,10 @@ public class SelectedProductAdapter extends RecyclerView.Adapter<SelectedProduct
 
     private ArrayList<Products> products;
 
-
+    //Constructor
     public SelectedProductAdapter(ArrayList<Products> products) {this.products=products;}
 
+    //Creating new ViewHolder
     @NonNull
     @Override
     public SelectedProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -24,6 +25,7 @@ public class SelectedProductAdapter extends RecyclerView.Adapter<SelectedProduct
         return new ViewHolder(view);
     }
 
+    //Binding attributes from the Product to the ViewHolder
     @Override
     public void onBindViewHolder(@NonNull SelectedProductAdapter.ViewHolder holder, int position) {
         Products product = products.get(position);
@@ -44,6 +46,7 @@ public class SelectedProductAdapter extends RecyclerView.Adapter<SelectedProduct
 
         public ViewHolder(View itemView) {
             super(itemView);
+            //assigning TextView items to corresponding view id
             name = itemView.findViewById(R.id.nameTextView);
             description = itemView.findViewById(R.id.descriptionTextView);
             price = itemView.findViewById(R.id.priceTextView);

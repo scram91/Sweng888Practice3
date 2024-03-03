@@ -44,27 +44,30 @@ public class SelectedResultsActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+        //creating the click listener for the emailbutton
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendEmail();
-                selectedProductAdapter.removeAll(productList);
-                successfulEmail = true;
-
+                //Need to ensure at least one item is present in the selected items before sending email
+                if(selectedProductAdapter.getItemCount() > 0) {
+                    sendEmail();
+                    selectedProductAdapter.removeAll(productList);
+                    successfulEmail = true;
+                }
             }
         });
 
     }
-
         @Override
         protected void onResume() {
             super.onResume();
-
+            //Display this toast if the email is sent
             if(successfulEmail){
                 Toast.makeText(SelectedResultsActivity.this,"Email sent successfully",Toast.LENGTH_SHORT).show();
             }
         }
 
+        //Function to sendEmail to the desired email address
         public void sendEmail() {
             String[] TO = {"sweng888mobileapps@gmail.com"}; // Email address where you want to send the email
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -76,7 +79,7 @@ public class SelectedResultsActivity extends AppCompatActivity {
             emailIntent.setType("message/rfc822");
             startActivity(Intent.createChooser(emailIntent,"Choose email client:"));
         }
-
+        //This will parse the selected products and place them in a string to send via email
         public String parseProducts(ArrayList<Products> products) {
             String productDetails = "";
             for (Products p : products) {

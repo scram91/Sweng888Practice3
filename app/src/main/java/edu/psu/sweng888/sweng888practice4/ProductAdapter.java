@@ -25,6 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.products = products;
     }
 
+    //Create nw ViewHolder
     @Override
     @NonNull
     public ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,6 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    //Binding data to the ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Products product = products.get(position);
@@ -47,17 +49,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return products.size();
     }
 
+    //Class to declare and assign the data that will be used in the Recycler View
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView, sellerTextView, priceTextView, descriptionTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            //assigning TextView elements to corresponding items
             nameTextView = itemView.findViewById(R.id.nameTextView);
             sellerTextView = itemView.findViewById(R.id.sellerTextView);
             priceTextView = itemView.findViewById(R.id.priceTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             itemView.setOnLongClickListener(new View.OnLongClickListener(){
-
+                //utilizing a Long Click rather than a simple short click to emphasize the user selecting an item
                 @Override
                 public boolean onLongClick(View v) {
                     isSelectMode = true;

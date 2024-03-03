@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
+    //initialize various database fields for future use
     private static final String DATABASE_NAME = "product_database";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_PRODUCT = "products";
@@ -23,6 +24,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //creating the database table
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createTable());
@@ -33,6 +35,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_PRODUCT);
     }
 
+    //return the desired query to create the table
     private String createTable(){
         return "CREATE TABLE " + TABLE_PRODUCT + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY, "+
@@ -43,39 +46,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
                 ")";
     }
 
-    public void populateProductDatabase(Products product) {
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, product.getName());
-        values.put(KEY_SELLER, product.getSeller());
-        values.put(KEY_PRICE, product.getPrice());
-        values.put(KEY_DESCRIPTION, product.getDescription());
-        database.insert(TABLE_PRODUCT, null, values);
-        database.close();
-    }
-    public List<Products> getProductByCategory (String category){
-        List<Products> productList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PRODUCT + " WHERE " + KEY_NAME + " = ?";
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery(selectQuery, new String[]{category});
-
-        if (cursor.moveToFirst()){
-            do {
-                Products product = new Products(
-                        cursor.getString(1), // NAME
-                        cursor.getString(2), // SELLER
-                        cursor.getString(3), // DESCRIPTION
-                        cursor.getString(4) // PRICE
-                );
-                productList.add(product);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        database.close();
-        return  productList;
-    }
+    //function to return a list of the products the user will select from
     public List<Products> getAllProducts() {
         List<Products> productList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " +TABLE_PRODUCT;
@@ -98,6 +69,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return productList;
     }
 
+    //check is the database is empty
     public boolean isEmpty() {
         boolean isEmpty = true;
         SQLiteDatabase database = getWritableDatabase();
@@ -113,6 +85,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return isEmpty;
     }
 
+    //populate the database with data the user is presented with
     public void populateProductDatabase(){
 
         SQLiteDatabase database = getWritableDatabase();
